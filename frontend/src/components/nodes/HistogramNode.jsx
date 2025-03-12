@@ -1,6 +1,6 @@
 // src/components/nodes/HistogramNode.jsx
 import React, { useState } from 'react';
-import { Handle, Position } from 'reactflow';
+import { Handle, Position } from '@xyflow/react';
 import statisticsApi from '../../api/StatisticsApi';
 import useApiRequest from '../../hooks/useApiRequest';
 

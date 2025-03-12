@@ -4,7 +4,7 @@ import {
   useNodesState, 
   useEdgesState, 
   addEdge 
-} from 'reactflow';
+} from '@xyflow/react';
 import { useDataFlow } from './useDataFlow';
 
 export const useNodeData = () => {

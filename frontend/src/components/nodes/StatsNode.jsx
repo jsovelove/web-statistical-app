@@ -1,6 +1,6 @@
 // src/components/nodes/StatsNode.jsx
 import React, { useState, useEffect } from 'react';
-import { Handle, Position } from 'reactflow';
+import { Handle, Position } from '@xyflow/react';
 import statisticsApi from '../../api/apiConfig';
 
 const StatsNode = ({ data, isConnectable }) => {

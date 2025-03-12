@@ -1,11 +1,7 @@
 // src/components/FlowCanvas.jsx
 import React, { useMemo } from 'react';
-import ReactFlow, {
-  Controls,
-  MiniMap,
-  Background,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+import { ReactFlow, Controls, MiniMap, Background } from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
 
 // Import all node types
 import * as nodeComponents from './nodes';
