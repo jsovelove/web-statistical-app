@@ -1,7 +1,7 @@
 // src/components/nodes/StatsNode.jsx
 import React, { useState, useEffect } from 'react';
 import { Handle, Position } from '@xyflow/react';
-import statisticsApi from '../../api/apiConfig';
+import statisticsService from '../../services/statisticsService';
 
 const StatsNode = ({ data, isConnectable }) => {
   const inputData = data.inputs?.input || [];
@@ -14,10 +14,10 @@ const StatsNode = ({ data, isConnectable }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch statistics from Python backend when input data changes
+  // Calculate statistics when input data changes
   useEffect(() => {
-    const fetchStats = async () => {
-      // Don't make API call if no data
+    const calculateStats = () => {
+      // Don't calculate if no data
       if (!inputData.length) {
         setStats({ mean: 'N/A', median: 'N/A', std_dev: 'N/A', count: 0 });
         return;
@@ -27,24 +27,25 @@ const StatsNode = ({ data, isConnectable }) => {
       setError(null);
       
       try {
-        const result = await statisticsApi.calculateBasicStats(inputData);
+        // Use our client-side service to calculate statistics
+        const result = statisticsService.calculateBasicStats(inputData);
         setStats(result);
         
         // Make the output data available to downstream nodes
         data.onChange(inputData);
       } catch (err) {
-        console.error('Error fetching statistics:', err);
+        console.error('Error calculating statistics:', err);
         setError('Failed to calculate statistics');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchStats();
+    calculateStats();
   }, [inputData, data]);
 
   return (
-    <div className="bg-white border-2 border-green-300 rounded-md p-2 shadow-md">
+    <div className="bg-white border-2 border-green-300 rounded-md p-2 shadow-md w-48">
       <div className="font-bold text-sm mb-2">Basic Statistics</div>
       <Handle
         type="target"
@@ -55,7 +56,7 @@ const StatsNode = ({ data, isConnectable }) => {
       />
       
       {loading ? (
-        <div className="text-xs text-gray-500 italic">Loading...</div>
+        <div className="text-xs text-gray-500 italic">Calculating...</div>
       ) : error ? (
         <div className="text-xs text-red-500">{error}</div>
       ) : (
@@ -65,12 +66,12 @@ const StatsNode = ({ data, isConnectable }) => {
           <div><span className="font-semibold">Median:</span> {typeof stats.median === 'number' ? stats.median.toFixed(2) : stats.median}</div>
           <div><span className="font-semibold">St. Dev:</span> {typeof stats.std_dev === 'number' ? stats.std_dev.toFixed(2) : stats.std_dev}</div>
           
-          {/* Additional statistics from Python backend */}
+          {/* Additional statistics */}
           {stats.min !== undefined && (
-            <div><span className="font-semibold">Min:</span> {stats.min.toFixed(2)}</div>
+            <div><span className="font-semibold">Min:</span> {typeof stats.min === 'number' ? stats.min.toFixed(2) : stats.min}</div>
           )}
           {stats.max !== undefined && (
-            <div><span className="font-semibold">Max:</span> {stats.max.toFixed(2)}</div>
+            <div><span className="font-semibold">Max:</span> {typeof stats.max === 'number' ? stats.max.toFixed(2) : stats.max}</div>
           )}
         </div>
       )}

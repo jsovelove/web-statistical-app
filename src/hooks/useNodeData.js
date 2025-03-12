@@ -1,5 +1,5 @@
 // src/hooks/useNodeData.js
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { 
   useNodesState, 
   useEdgesState, 
@@ -41,7 +41,7 @@ export const useNodeData = () => {
   
   // Add a new node to the graph
   const addNode = useCallback((type) => {
-    const nodeId = `node_${type}_${Date.now()}`;
+    const nodeId = `${type}_${Date.now()}`;
     const newNode = {
       id: nodeId,
       type,
@@ -60,7 +60,7 @@ export const useNodeData = () => {
     setNodeData(prev => ({
       ...prev,
       [nodeId]: { 
-        value: type === 'input' ? [1, 2, 3, 4, 5] : [],
+        value: type === 'inputnode' ? [1, 2, 3, 4, 5] : [],
         // For tracking inputs that come from connections
         inputs: {}
       }

@@ -1,7 +1,7 @@
 // src/components/nodes/FilterNode.jsx
 import React, { useState, useEffect } from 'react';
 import { Handle, Position } from '@xyflow/react';
-import statisticsApi from '../../api/apiConfig';
+import statisticsService from '../../services/statisticsService';
 
 const FilterNode = ({ data, isConnectable }) => {
   const [min, setMin] = useState('');
@@ -14,7 +14,7 @@ const FilterNode = ({ data, isConnectable }) => {
   
   // Apply filter when inputs change
   useEffect(() => {
-    const applyFilter = async () => {
+    const applyFilter = () => {
       if (!inputData.length) {
         setFilteredData([]);
         return;
@@ -24,11 +24,12 @@ const FilterNode = ({ data, isConnectable }) => {
       setError(null);
       
       try {
-        // Convert empty strings to null for the API
+        // Convert empty strings to null for the filter function
         const minVal = min === '' ? null : parseFloat(min);
         const maxVal = max === '' ? null : parseFloat(max);
         
-        const result = await statisticsApi.filterData(
+        // Use client-side service to filter data
+        const result = statisticsService.filterData(
           inputData, 
           minVal,
           maxVal
@@ -51,7 +52,7 @@ const FilterNode = ({ data, isConnectable }) => {
   }, [inputData, min, max, data]);
 
   return (
-    <div className="bg-white border-2 border-yellow-300 rounded-md p-2 shadow-md">
+    <div className="bg-white border-2 border-yellow-300 rounded-md p-2 shadow-md w-48">
       <div className="font-bold text-sm mb-2">Filter</div>
       <Handle
         type="target"

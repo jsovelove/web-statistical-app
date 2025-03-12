@@ -30,7 +30,7 @@ const DataDisplayNode = ({ data, isConnectable }) => {
   };
 
   return (
-    <div className="bg-white border-2 border-blue-300 rounded-md p-2 shadow-md">
+    <div className="bg-white border-2 border-blue-300 rounded-md p-2 shadow-md w-48">
       <div className="font-bold text-sm mb-2">Data Display</div>
       <Handle
         type="target"

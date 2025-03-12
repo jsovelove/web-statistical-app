@@ -39,19 +39,21 @@ const FlowCanvas = ({
   }, [nodes, nodeData]);
 
   return (
-    <ReactFlow
-      nodes={enhancedNodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      nodeTypes={nodeTypes}
-      fitView
-    >
-      <Controls />
-      <MiniMap />
-      <Background variant="dots" gap={12} size={1} />
-    </ReactFlow>
+    <div style={{ width: '100%', height: '100%' }}>
+      <ReactFlow
+        nodes={enhancedNodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        nodeTypes={nodeTypes}
+        fitView
+      >
+        <Controls />
+        <MiniMap nodeStrokeWidth={3} zoomable pannable />
+        <Background variant="dots" gap={12} size={1} />
+      </ReactFlow>
+    </div>
   );
 };
 

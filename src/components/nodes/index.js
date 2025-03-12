@@ -1,3 +1,4 @@
+// src/components/nodes/index.js
 // Import all node types
 import FilterNode from './FilterNode';
 import HistogramNode from './HistogramNode';

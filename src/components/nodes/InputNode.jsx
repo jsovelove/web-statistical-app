@@ -9,7 +9,7 @@ const InputNode = ({ data, isConnectable }) => {
   // Parse input text to array of numbers
   const parseInput = (text) => {
     try {
-      // Remove any non-numeric characters except dots, commas, minus, and whitespace
+      // Clean the text and allow only numbers, dots, commas, minus, and whitespace
       const cleanText = text.replace(/[^\d.,\s-]/g, '');
       // Split by commas or whitespace
       const parts = cleanText.split(/[\s,]+/);
@@ -44,7 +44,7 @@ const InputNode = ({ data, isConnectable }) => {
   };
 
   return (
-    <div className="bg-white border-2 border-blue-300 rounded-md p-2 shadow-md">
+    <div className="bg-white border-2 border-blue-300 rounded-md p-2 shadow-md w-48">
       <div className="font-bold text-sm mb-2">Input Data</div>
       
       <div className="mb-2">
